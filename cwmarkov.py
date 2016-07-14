@@ -3,10 +3,12 @@ import sys
 from random import choice
 import twitter
 
-input_path = sys.argv[1]
+file1 = sys.argv[1]
+file2 = sys.argv[2] 
 
 
-def open_and_read_file(file_path):
+
+def open_and_read_file(file_path1, file_path2):
     """Takes file path as string; returns text as string.
 
     Takes a string that is a file path, opens the file, and turns
@@ -14,7 +16,7 @@ def open_and_read_file(file_path):
     """
     # making a variable called contents and setting it equal to opening the file, 
     # reading over the file and making it all into one big string
-    contents = open(file_path).read()
+    contents = open(file_path1).read() + " " + open(file_path2).read()
     return contents
 
 
@@ -80,6 +82,8 @@ def make_text(chains):
         # if the next word is None, then break the while loop
         if not next_word:
             break
+        if len(text) + len(next_word) > 140:
+            return text
         # adding the next word to our text
         text = text + " " + next_word
         # updates the random_bigram variable to be the second word of the original bigram
@@ -109,7 +113,7 @@ def tweet(new_text):
 # input_path = "green-eggs.txt"
 
 # Open the file and turn it into one long string
-input_text = open_and_read_file(input_path)
+input_text = open_and_read_file(file1,file2)
 
 # Get a Markov chain
 chains = make_chains(input_text)
